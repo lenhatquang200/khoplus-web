@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/logo.ico">
+    <link href="../../assets/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/bootstrap5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body style="visibility: hidden">
+<div style="" class="container-fluid mt-3">
+    <div class="mb-3 mt-3">
+        <button id="btnModalForm" type="button" class="btn btn-success" data-bs-toggle="modal"
+                data-bs-target="#modalForm">
+            <i class="bi bi-plus-circle-dotted"></i> Tạo mới
+        </button>
+    </div>
+    <div class="mb-3 mt-3">
+        <div id="table"></div>
+    </div>
+</div>
+<!-- The Modal -->
+<form id="modalFormSubmit">
+    <div class="modal fade" id="modalForm" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">BIỂU MẪU</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="txtName" class="form-label">Nhóm:</label>
+                        <input
+                                autofocus
+                                oninvalid="this.setCustomValidity('Vui lòng nhập tên Nhóm hàng hóa')"
+                                oninput="this.setCustomValidity('')"
+                                required type="text" class="form-control" id="txtName" placeholder="Tên nhóm..."
+                                name="txtName">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btnClose" data-bs-dismiss="modal"><i
+                            class="bi bi-x-lg"></i> Đóng
+                    </button>
+                    <button type="submit" class="btn btn-success btnSave"><i class="bi bi-floppy"></i> Lưu</button>
+                    <button type="button" class="btn btn-warning btnUpdate"><i class="bi bi-floppy"></i> Cập nhật
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script src="../../assets/bootstrap5/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/js/jquery-3.7.1.min.js"></script>
+<script src="../../assets/js/lodash.js"></script>
+<script src="../../assets/js/sweetalert2@11.js"></script>
+<script src="../../assets/js/xlsx.full.min.js"></script>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/tools.js"></script>
+<script src="../../assets/js/script.js"></script>
+<script src="../js/hang-hoa-don-vi-tinh.js"></script>
+</html>
+
+

@@ -1,0 +1,66 @@
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+.dropdown-menu .dropdown-item:focus {
+    background-color: #0ac282 !important;
+    color: whitesmoke !important;
+}
+
+.nav-link-style {
+    color: #000 !important;
+    font-weight: 700 !important;
+
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, .25) !important;
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 10px solid grey;
+    border-radius: 50%;
+    border-top: 10px solid blue;
+    width: 100px;
+    height: 100px;
+    animation: spinIndicator 1s linear infinite;
+}
+
+@keyframes spinIndicator {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.mb-3 {
+    position: relative;
+}
+
+.slcBoxItem {
+    margin-bottom: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.slcBoxItem:hover {
+    color: #1e2125;
+    background-color: #e9ecef
+}
+
+.slcBoxItem.selected {
+    background-color: #0ac282 !important;
+    color: whitesmoke !important;
+}
