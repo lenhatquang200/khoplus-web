@@ -21,6 +21,27 @@ const tools = {
         if (!_.isNull(user) || _.isUndefined(user)) {
             user = JSON.parse(user)
         }
+        let current_branches = localStorage.getItem('current_branches')
+        if (!_.isNull(current_branches) || _.isUndefined(current_branches)) {
+            let data = user.branches.filter(item => item.id.toString() === current_branches.toString())
+            if (data.length) {
+                data = data[0]
+                user.current_branches = {
+                    id: data.id,
+                    name: data.name
+                }
+            } else {
+                user.current_branches = {
+                    id: -1,
+                    name: "Kho không xác định"
+                }
+            }
+        } else {
+            user.current_branches = {
+                id: -1,
+                name: "Kho không xác định"
+            }
+        }
         return user
     },
 

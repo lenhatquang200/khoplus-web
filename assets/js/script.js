@@ -56,11 +56,14 @@ const txtHomNay = () => {
 
     let userInfo = tools.getUserInfo()
     const txt = `
-    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>$khohang$</b>.
+    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>${userInfo.current_branches.name}</b>.
     Hôm nay là <b>${dayOfWeek}</b>, Ngày <b>${day}</b> Tháng <b>${month}</b> Năm <b>${year}</b>
     `;
-    // console.log(txt)
-    $('body').prepend(`<div style="font-style: italic;" class="text-center mt-1 mb-1" id="txtHomNay">${txt}</div>`)
+    if ($('#txtHomNay').length) {
+        $('#txtHomNay').html(txt)
+    } else {
+        $('body').prepend(`<div style="font-style: italic;" class="text-center mt-1 mb-1" id="txtHomNay">${txt}</div>`)
+    }
 }
 const menu = () => {
     const currentPathname = location.pathname
@@ -170,6 +173,7 @@ const menu = () => {
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a id="btnUserInfo" class="dropdown-item" href="javascript:void(0)">Thông tin</a></li>
+                    <li><a data-bs-toggle="modal" data-bs-target="#modalChangeBranches" class="dropdown-item" href="javascript:void(0)">Đổi kho hàng</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -178,11 +182,61 @@ const menu = () => {
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="modalChangeBranches" data-bs-keyboard="false" data-bs-backdrop="static">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+    
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">ĐỔI KHO HÀNG</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnClose" data-bs-dismiss="modal"><i
+                                class="bi bi-x-lg"></i> Đóng
+                        </button>
+                        <button type="submit" class="btn btn-success btnSave"><i class="bi bi-floppy"></i> Lưu</button>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
     `)
     $('#collapsibleNavbar ul li').on('click', function () {
         if (!_.isUndefined($(this).attr('data-name')))
             localStorage.setItem("MenuClickName", $(this).attr('data-name').replace(/@/g, '_'))
         localStorage.setItem("MenuClickUrl", $(this).attr('data-url'))
+    })
+    $('#modalChangeBranches').on('show.bs.modal', function (e) {
+        const userInfo = tools.getUserInfo()
+        let opts = ``
+        userInfo.branches.map(item => {
+            opts += `
+            <div class="form-check">
+                <label class="form-check-label" for="opts_branches_${item.id}">
+                    <input${item.id.toString() === userInfo.current_branches.id.toString() ? " checked" : ""} type="radio" class="form-check-input opts_branches" id="opts_branches_${item.id}" name="optradio" value="${item.id}">${item.name}
+                </label>
+            </div>
+            `
+        })
+        $('#modalChangeBranches .modal-body').html(opts)
+        $('#modalChangeBranches .btnSave').off('click').on('click', function () {
+            $('#modalChangeBranches .opts_branches').map(function () {
+                if ($(this).prop('checked')) {
+                    localStorage.setItem('current_branches', $(this).attr('value'))
+                    txtHomNay()
+                    tools.toast("success", "Đổi kho hàng", "Cập nhật thành công.")
+                    $('#modalChangeBranches').modal('hide');
+                }
+            })
+        })
     })
 }
 const breadcrumb = () => {
