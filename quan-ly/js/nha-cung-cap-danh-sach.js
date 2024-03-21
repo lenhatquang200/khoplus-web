@@ -109,19 +109,19 @@ $(document).ready(async function () {
                         $('#txtGroup').attr('data-id', '').focus()
                         $('#txtCode').val(new Date().getTime())
                         response.data.manufacturing_group.text = response.data.manufacturing_group.name
+                        response.data.num = list.length + 1
                         let row = {
                             num: list.length + 1,
                             id: response.data.id,
                             code: response.data.code,
+                            manufacturing_group: response.data.manufacturing_group,
                             name: response.data.name,
                             phone: response.data.phone,
                             address: response.data.address,
-                            note: response.data.note,
-                            manufacturing_group: response.data.manufacturing_group,
-                            manufacturing_group_id: response.data.manufacturing_group_id,
                             account_number: response.data.account_number,
                             bank_name: response.data.bank_name,
-                            formatted_created_at: response.data.formatted_created_at,
+                            note: response.data.note,
+                            formatted_created_at: response.data.formatted_created_at
                         }
                         table.addRow(row)
                         tools.toast("success", "Nhóm nhà cung cấp", "Tạo mới thành công.")
@@ -191,5 +191,7 @@ $(document).ready(async function () {
             $('#txtGroup').attr('data-id', obj.manufacturing_group.id).val(obj.manufacturing_group.name)
         }
     }
+
+    IMask($('#txtPhone')[0], {mask: "0000-000-000"});
 })
 
