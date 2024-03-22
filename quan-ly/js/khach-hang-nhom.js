@@ -64,7 +64,6 @@ $(document).ready(async function () {
                         .attr('data-trid', '')
                         .attr('data-id', '')
                         .focus()
-
                     let row = {
                         num: list.length + 1,
                         id: response.data.id,
