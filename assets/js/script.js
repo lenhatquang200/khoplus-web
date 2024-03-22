@@ -18,6 +18,7 @@ const listMenu = [
                     {name: "Nhóm", url: "/quan-ly/nha-cung-cap/nhom.html"},
                 ]
             },
+            {name: "Cây trồng", url: "/quan-ly/cay-trong.html", submenu: []},
         ]
     },
 ]
