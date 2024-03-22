@@ -56,6 +56,10 @@ $(document).ready(async function () {
                 })
                 if (response.success) {
                     $('#modalFormSubmit')[0].reset()
+                    $('#txtName')
+                        .attr('data-trid', '')
+                        .attr('data-id', '')
+                        .focus()
                     let row = {
                         num: list.length + 1,
                         id: response.data.id,

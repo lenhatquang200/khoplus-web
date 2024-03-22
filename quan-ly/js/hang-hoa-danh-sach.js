@@ -117,7 +117,11 @@ $(document).ready(async function () {
                     $("#txtUnit").attr('data-id', '')
                     $("#txtType").attr('data-id', '')
                     $("#txtGroup").attr('data-id', '')
-                    $("#txtName").focus()
+                    $("#txtName")
+                    $('#txtName')
+                        .attr('data-trid', '')
+                        .attr('data-id', '')
+                        .focus()
                     response.data.unit.text = response.data.unit.name
                     response.data.type.text = response.data.type.name
                     response.data.group.text = response.data.group.name

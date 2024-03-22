@@ -108,6 +108,9 @@ $(document).ready(async function () {
                         $('#modalFormSubmit')[0].reset()
                         $('#txtGroup').attr('data-id', '').focus()
                         $('#txtCode').val(new Date().getTime())
+                        $('#txtName')
+                            .attr('data-trid', '')
+                            .attr('data-id', '')
                         response.data.manufacturing_group.text = response.data.manufacturing_group.name
                         response.data.num = list.length + 1
                         let row = {
