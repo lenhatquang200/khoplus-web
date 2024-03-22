@@ -1,9 +1,9 @@
 $(document).ready(async function () {
     let listProduct = await tools.ajaxGet("/products")
-    let listType = await tools.ajaxGet("/product-types")
-    let listGroup = await tools.ajaxGet("/product-groups")
-    let listUnit = await tools.ajaxGet("/product-units")
     if (listProduct.success) {
+        let listType = await tools.ajaxGet("/product-types")
+        let listGroup = await tools.ajaxGet("/product-groups")
+        let listUnit = await tools.ajaxGet("/product-units")
         $('#txtType').on('input', function () {
             let _listType = listType.data
             tools.select('#txtType', $(this).val(), _listType, id => {
