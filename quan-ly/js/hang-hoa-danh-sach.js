@@ -1,40 +1,6 @@
 $(document).ready(async function () {
     let listProduct = await tools.ajaxGet("/products")
     if (listProduct.success) {
-        let listType = await tools.ajaxGet("/product-types")
-        let listGroup = await tools.ajaxGet("/product-groups")
-        let listUnit = await tools.ajaxGet("/product-units")
-        $('#txtType').on('input', function () {
-            let _listType = listType.data
-            tools.select('#txtType', $(this).val(), _listType, id => {
-                let data = _listType.filter(item => item.id.toString() === id.toString())
-                if (data.length) {
-                    data = data[0]
-                    $('#txtType').attr('data-id', data.id).val(data.name)
-                }
-            })
-        })
-        $('#txtGroup').on('input', function () {
-            let _listGroup = listGroup.data
-            tools.select('#txtGroup', $(this).val(), _listGroup, id => {
-                let data = _listGroup.filter(item => item.id.toString() === id.toString())
-                if (data.length) {
-                    data = data[0]
-                    $('#txtGroup').attr('data-id', data.id).val(data.name)
-                }
-            })
-        })
-        $('#txtUnit').on('input', function () {
-            let _listUnit = listUnit.data
-            tools.select('#txtUnit', $(this).val(), _listUnit, id => {
-                let data = _listUnit.filter(item => item.id.toString() === id.toString())
-                if (data.length) {
-                    data = data[0]
-                    $('#txtUnit').attr('data-id', data.id).val(data.name)
-                }
-            })
-        })
-
         const list = []
         let num = 1
         listProduct.data.map(item => {
@@ -74,6 +40,40 @@ $(document).ready(async function () {
                 delete: deleteRow,
                 edit: editRow,
             },
+        })
+
+        let listType = await tools.ajaxGet("/product-types")
+        let listGroup = await tools.ajaxGet("/product-groups")
+        let listUnit = await tools.ajaxGet("/product-units")
+        $('#txtType').on('input', function () {
+            let _listType = listType.data
+            tools.select('#txtType', $(this).val(), _listType, id => {
+                let data = _listType.filter(item => item.id.toString() === id.toString())
+                if (data.length) {
+                    data = data[0]
+                    $('#txtType').attr('data-id', data.id).val(data.name)
+                }
+            })
+        })
+        $('#txtGroup').on('input', function () {
+            let _listGroup = listGroup.data
+            tools.select('#txtGroup', $(this).val(), _listGroup, id => {
+                let data = _listGroup.filter(item => item.id.toString() === id.toString())
+                if (data.length) {
+                    data = data[0]
+                    $('#txtGroup').attr('data-id', data.id).val(data.name)
+                }
+            })
+        })
+        $('#txtUnit').on('input', function () {
+            let _listUnit = listUnit.data
+            tools.select('#txtUnit', $(this).val(), _listUnit, id => {
+                let data = _listUnit.filter(item => item.id.toString() === id.toString())
+                if (data.length) {
+                    data = data[0]
+                    $('#txtUnit').attr('data-id', data.id).val(data.name)
+                }
+            })
         })
 
         const SaveAndUpdate = (b) => {
