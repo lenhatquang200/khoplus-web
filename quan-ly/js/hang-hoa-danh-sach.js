@@ -38,10 +38,17 @@ $(document).ready(async function () {
         const list = []
         let num = 1
         listProduct.data.map(item => {
+            item.type.text = item.type.name
+            item.unit.text = item.unit.name
+            item.group.text = item.group.name
             list.push({
                 num: num++,
                 id: item.id,
+                code: item.code,
                 name: item.name,
+                unit: item.unit,
+                type: item.type,
+                group: item.group,
                 formatted_created_at: item.formatted_created_at
             })
         })
@@ -49,7 +56,11 @@ $(document).ready(async function () {
             id: '#table',
             columns: [
                 {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
-                {name: "name", value: "Nhóm"},
+                {name: "code", value: "Mã"},
+                {name: "name", value: "Hàng Hoá"},
+                {name: "unit", value: "ĐVT"},
+                {name: "type", value: "Loại"},
+                {name: "group", value: "Nhóm"},
                 {name: "formatted_created_at", value: "TG Tạo", style: {width: '200px'}},
             ],
             colsSearch: ['name'],
@@ -71,6 +82,9 @@ $(document).ready(async function () {
                 $('.btnSave').css('display', 'block')
                 $('.btnUpdate').css('display', 'none')
                 $('#txtCode').val(new Date().getTime())
+                $("#txtUnit").attr('data-id', '')
+                $("#txtType").attr('data-id', '')
+                $("#txtGroup").attr('data-id', '')
             } else {
                 $('.btnSave').css('display', 'none')
                 $('.btnUpdate').css('display', 'block')
@@ -85,9 +99,9 @@ $(document).ready(async function () {
         $('#modalFormSubmit').submit(async e => {
             const type = parseInt($('#modalFormSubmit').attr('data-type'))
             let name = $("#txtName").val()
+            let unit_id = $("#txtUnit").attr('data-id')
             let type_id = $("#txtType").attr('data-id')
             let group_id = $("#txtGroup").attr('data-id')
-            let unit_id = $("#txtUnit").attr('data-id')
             let code = $("#txtCode").val()
             if (type) {
                 const response = await tools.ajaxPost("/products", {
@@ -98,14 +112,29 @@ $(document).ready(async function () {
                     code: code,
                 })
                 if (response.success) {
-                    // $('#modalFormSubmit')[0].reset()
-                    // let row = {
-                    //     num: list.length + 1,
-                    //     id: response.data.id,
-                    //     name: response.data.name,
-                    //     formatted_created_at: response.data.formatted_created_at,
-                    // }
-                    // table.addRow(row)
+                    $('#modalFormSubmit')[0].reset()
+                    $('#txtCode').val(new Date().getTime())
+                    $("#txtUnit").attr('data-id', '')
+                    $("#txtType").attr('data-id', '')
+                    $("#txtGroup").attr('data-id', '')
+                    $("#txtName").focus()
+                    response.data.unit.text = response.data.unit.name
+                    response.data.type.text = response.data.type.name
+                    response.data.group.text = response.data.group.name
+                    let row = {
+                        num: list.length + 1,
+                        id: response.data.id,
+                        code: response.data.code,
+                        name: response.data.name,
+                        unit: response.data.unit,
+                        unit_id: unit_id,
+                        type: response.data.type,
+                        type_id: type_id,
+                        group: response.data.group,
+                        group_id: group_id,
+                        formatted_created_at: response.data.formatted_created_at,
+                    }
+                    table.addRow(row)
                     tools.toast("success", "Hàng hóa", "Tạo mới thành công.")
                 } else {
                     tools.toast("error", "Hàng hóa", "Lỗi, vui lòng kiểm tra lại.")
@@ -115,10 +144,26 @@ $(document).ready(async function () {
                 const trId = $("#txtName").attr('data-trid')
                 const id = $("#txtName").attr('data-id')
                 const response = await tools.ajaxPut("/products/" + id, {
-                    name: name
+                    name: name,
+                    type_id: type_id,
+                    group_id: group_id,
+                    unit_id: unit_id,
+                    code: code
                 })
                 if (response.success) {
-                    table.updateRow({id: id, trId: trId}, {name: name})
+                    response.data.unit.text = response.data.unit.name
+                    response.data.type.text = response.data.type.name
+                    response.data.group.text = response.data.group.name
+                    table.updateRow({id: id, trId: trId}, {
+                        name: name,
+                        unit: response.data.unit,
+                        unit_id: unit_id,
+                        type: response.data.type,
+                        type_id: type_id,
+                        group: response.data.group,
+                        group_id: group_id,
+                        code: code
+                    })
                     tools.toast("success", "Nhóm hàng hóa", "Cập nhật thành công.")
                 } else {
                     tools.toast("error", "Nhóm hàng hóa", "Lỗi, vui lòng kiểm tra lại.")
@@ -153,6 +198,10 @@ $(document).ready(async function () {
                 .attr('data-trid', data.trId)
                 .attr('data-id', obj.id)
                 .val(obj.name)
+            $('#txtCode').val(obj.code)
+            $('#txtUnit').attr('data-id', obj.unit.id).val(obj.unit.name)
+            $('#txtType').attr('data-id', obj.type.id).val(obj.type.name)
+            $('#txtGroup').attr('data-id', obj.group.id).val(obj.group.name)
         }
     }
 })

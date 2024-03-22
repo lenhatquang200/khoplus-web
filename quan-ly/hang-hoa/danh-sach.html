@@ -45,6 +45,14 @@
                                 name="txtName">
                     </div>
                     <div class="mb-3 mt-3">
+                        <label for="txtUnit" class="form-label">Đơn vị tính:</label>
+                        <input
+                                oninvalid="this.setCustomValidity('Vui lòng chọn đơn vị tính hàng hóa')"
+                                oninput="this.setCustomValidity('')"
+                                required type="text" class="form-control" id="txtUnit" placeholder="Đơn vị tính hàng hóa..."
+                                name="txtUnit">
+                    </div>
+                    <div class="mb-3 mt-3">
                         <label for="txtType" class="form-label">Loại:</label>
                         <input
                                 oninvalid="this.setCustomValidity('Vui lòng chọn loại hàng hóa')"
@@ -59,14 +67,6 @@
                                 oninput="this.setCustomValidity('')"
                                 required type="text" class="form-control" id="txtGroup" placeholder="Nhóm hàng hóa..."
                                 name="txtGroup">
-                    </div>
-                    <div class="mb-3 mt-3">
-                        <label for="txtUnit" class="form-label">Đơn vị tính:</label>
-                        <input
-                                oninvalid="this.setCustomValidity('Vui lòng chọn đơn vị tính hàng hóa')"
-                                oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtUnit" placeholder="Đơn vị tính hàng hóa..."
-                                name="txtUnit">
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="txtCode" class="form-label">Code:</label>

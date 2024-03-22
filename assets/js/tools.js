@@ -21,23 +21,23 @@ const tools = {
         if (!_.isNull(user) || _.isUndefined(user)) {
             user = JSON.parse(user)
         }
-        let current_branches = localStorage.getItem('current_branches')
-        if (!_.isNull(current_branches) || _.isUndefined(current_branches)) {
-            let data = user.branches.filter(item => item.id.toString() === current_branches.toString())
+        let current_branche = localStorage.getItem('current_branche')
+        if (!_.isNull(current_branche) || _.isUndefined(current_branche)) {
+            let data = user.branches.filter(item => item.id.toString() === current_branche.toString())
             if (data.length) {
                 data = data[0]
-                user.current_branches = {
+                user.current_branche = {
                     id: data.id,
                     name: data.name
                 }
             } else {
-                user.current_branches = {
+                user.current_branche = {
                     id: -1,
                     name: "Kho không xác định"
                 }
             }
         } else {
-            user.current_branches = {
+            user.current_branche = {
                 id: -1,
                 name: "Kho không xác định"
             }
@@ -50,6 +50,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
+            'current-branche': localStorage.getItem('current_branche')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -69,6 +70,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
+            'current-branche': localStorage.getItem('current_branche')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -89,6 +91,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
+            'current-branche': localStorage.getItem('current_branche')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -108,6 +111,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
+            'current-branche': localStorage.getItem('current_branche')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -623,7 +627,8 @@ const tools = {
             })
             $(_in.id).find('.btn-outline-primary').on('click', function (e) {
                 let DOMTable = $(_in.id).find('.table')
-                tools.ExportExcel(DOMTable, 'Danh Sáchnhom tét', {
+                let title = $('title').text().toUpperCase()
+                tools.ExportExcel(DOMTable, title, {
                     remove_column_end: false,
                 });
             })

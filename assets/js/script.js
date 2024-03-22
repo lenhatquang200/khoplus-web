@@ -1,34 +1,25 @@
 const listMenu = [
     {name: "Bảng điều khiển", url: "/quan-ly/bang-dieu-khien.html", submenu: []},
     {
-        name: "Hàng hóa",
+        name: "Danh mục",
         url: "#",
         submenu: [
-            {name: "Danh sách", url: "/quan-ly/hang-hoa/danh-sach.html"},
-            {name: "Loại", url: "/quan-ly/hang-hoa/loai.html"},
-            {name: "Nhóm", url: "/quan-ly/hang-hoa/nhom.html"},
-            {name: "Đơn vị tính", url: "/quan-ly/hang-hoa/don-vi-tinh.html"},
-            // {name: "Quy đổi số lượng", url: "/quan-ly/hang-hoa/quy-doi-so-luong.html"},
-            // {
-            //     name: "Điều chỉnh", url: "#", submenu: [
-            //         {name: "Giá bán", url: "/quan-ly/hang-hoa/dieu-chinh/gia-ban.html"},
-            //         {name: "Tồn kho", url: "/quan-ly/hang-hoa/dieu-chinh/so-luong-ton-kho.html"},
-            //         {
-            //             name: "Thưởng Bán hàng - Giao hàng",
-            //             url: "/quan-ly/hang-hoa/dieu-chinh/thuong-ban-hang-giao-hang.html"
-            //         }
-            //     ]
-            // }
+            {
+                name: "Hàng hóa", url: "#", submenu: [
+                    {name: "Danh sách", url: "/quan-ly/hang-hoa/danh-sach.html"},
+                    {name: "Loại", url: "/quan-ly/hang-hoa/loai.html"},
+                    {name: "Nhóm", url: "/quan-ly/hang-hoa/nhom.html"},
+                    {name: "Đơn vị tính", url: "/quan-ly/hang-hoa/don-vi-tinh.html"},
+                ]
+            },
+            {
+                name: "Nhà cung cấp", url: "#", submenu: [
+                    {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
+                    {name: "Nhóm", url: "/quan-ly/nha-cung-cap/nhom.html"},
+                ]
+            },
         ]
     },
-    {
-        name: "Nhà cung cấp",
-        url: "#",
-        submenu: [
-            {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
-            {name: "Nhóm", url: "/quan-ly/nha-cung-cap/nhom.html"},
-        ]
-    }
 ]
 
 const denyPathname = ['/', '/index.html']
@@ -56,7 +47,7 @@ const txtHomNay = () => {
 
     let userInfo = tools.getUserInfo()
     const txt = `
-    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>${userInfo.current_branches.name}</b>.
+    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>${userInfo.current_branche.name}</b>.
     Hôm nay là <b>${dayOfWeek}</b>, Ngày <b>${day}</b> Tháng <b>${month}</b> Năm <b>${year}</b>
     `;
     if ($('#txtHomNay').length) {
@@ -105,7 +96,7 @@ const menu = () => {
                             level_2 += `
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item test" href="#">
-                                    ${item['name']} <i class="bi bi-caret-right"></i>
+                                    ${item['name']} <i class="bi bi-caret-right float-end"></i>
                                 </a >
                                 <ul class="dropdown-menu">
                                     ${level_3}
@@ -119,7 +110,7 @@ const menu = () => {
                     level_1 += `
                     <li class="dropdown-submenu">
                         <a class="dropdown-item test" tabindex="-1" href="#">
-                            ${item['name']} <i class="bi bi-caret-right"></i>
+                            ${item['name']} <i class="bi bi-caret-right float-end"></i>
                         </a>
                         <ul class="dropdown-menu">
                             ${level_2}
@@ -221,7 +212,7 @@ const menu = () => {
             opts += `
             <div class="form-check">
                 <label class="form-check-label" for="opts_branches_${item.id}">
-                    <input${item.id.toString() === userInfo.current_branches.id.toString() ? " checked" : ""} type="radio" class="form-check-input opts_branches" id="opts_branches_${item.id}" name="optradio" value="${item.id}">${item.name}
+                    <input${item.id.toString() === userInfo.current_branche.id.toString() ? " checked" : ""} type="radio" class="form-check-input opts_branches" id="opts_branches_${item.id}" name="optradio" value="${item.id}">${item.name}
                 </label>
             </div>
             `
@@ -230,7 +221,7 @@ const menu = () => {
         $('#modalChangeBranches .btnSave').off('click').on('click', function () {
             $('#modalChangeBranches .opts_branches').map(function () {
                 if ($(this).prop('checked')) {
-                    localStorage.setItem('current_branches', $(this).attr('value'))
+                    localStorage.setItem('current_branche', $(this).attr('value'))
                     txtHomNay()
                     tools.toast("success", "Đổi kho hàng", "Cập nhật thành công.")
                     $('#modalChangeBranches').modal('hide');
@@ -319,6 +310,7 @@ document.onreadystatechange = function () {
             localStorage.setItem("MenuClickUrl", "/thong-tin-nguoi-dung.html")
         })
         $('.dropdown-submenu a.test').on("click", function (e) {
+            $(this).parent().parent().find('ul.dropdown-menu').css('display', 'none')
             $(this).next('ul').toggle();
             e.stopPropagation();
             e.preventDefault();
