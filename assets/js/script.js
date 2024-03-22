@@ -20,6 +20,12 @@ const listMenu = [
             },
             {name: "Cây trồng", url: "/quan-ly/cay-trong.html", submenu: []},
             {name: "Kho", url: "/quan-ly/kho.html", submenu: []},
+            {
+                name: "Khách hàng", url: "#", submenu: [
+                    // {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
+                    {name: "Nhóm", url: "/quan-ly/khach-hang/nhom.html"},
+                ]
+            },
         ]
     },
 ]
