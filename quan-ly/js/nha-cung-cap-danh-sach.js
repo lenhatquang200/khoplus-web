@@ -51,7 +51,7 @@ $(document).ready(async function () {
                 {name: "note", value: "Ghi chú"},
                 {name: "formatted_created_at", value: "TG Tạo", style: {width: '200px'}},
             ],
-            colsSearch: ['name'],
+            colsSearch: ['name', 'code', 'manufacturing_group', 'phone', 'address', 'account_number', 'bank_name', 'note'],
             actions: {
                 delete: true,
                 edit: true,

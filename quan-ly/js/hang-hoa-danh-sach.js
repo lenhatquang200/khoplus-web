@@ -29,7 +29,7 @@ $(document).ready(async function () {
                 {name: "group", value: "Nhóm"},
                 {name: "formatted_created_at", value: "TG Tạo", style: {width: '200px'}},
             ],
-            colsSearch: ['name'],
+            colsSearch: ['name', 'code', 'type', 'group', 'unit'],
             actions: {
                 delete: true,
                 edit: true,

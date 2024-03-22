@@ -622,7 +622,7 @@ const tools = {
                     let str = ''
                     Object.keys(obj).map(key => {
                         if (colsSearch.indexOf(key) > -1) {
-                            str += obj[key]
+                            str += JSON.stringify(obj[key])
                         }
                     })
                     return tools.strToSearch(str).indexOf(value) > -1
