@@ -219,6 +219,19 @@ const tools = {
             }
         })
     },
+    loader: function (isRun) {
+        if (isRun) {
+            $('body .container-content').append(`
+            <div id="divLoading" style="overflow: hidden; background-color: #fff; position: absolute; top: 0; width: 100%; height: 2000px; right: 0; left: 0;">
+                <div id="loader"></div>
+            </div>
+            `)
+            $('body').css('overflow', 'hidden')
+        } else {
+            $('body').css('overflow', 'auto')
+            $('#divLoading').remove()
+        }
+    },
 
     timeSpanToDateTime: (time) => {
         try {

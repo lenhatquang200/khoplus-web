@@ -229,6 +229,7 @@ const menu = () => {
             })
         })
     })
+    $('body .container-fluid').css('position', 'relative')
 }
 const breadcrumb = () => {
     const currentPathname = location.pathname
