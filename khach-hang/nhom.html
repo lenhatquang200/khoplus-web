@@ -36,13 +36,18 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="mb-3 mt-3">
-                        <label for="txtName" class="form-label">Cây trồng:</label>
+                        <label for="txtName" class="form-label">Nhóm:</label>
                         <input
                                 autofocus
-                                oninvalid="this.setCustomValidity('Vui lòng nhập tên cây trồng')"
+                                oninvalid="this.setCustomValidity('Vui lòng nhập tên nhóm khách hàng')"
                                 oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtName" placeholder="Tên cây trồng..."
+                                required type="text" class="form-control" id="txtName" placeholder="Tên nhóm..."
                                 name="txtName">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="txtNote" class="form-label">Ghi chú:</label>
+                        <input type="text" class="form-control" id="txtNote" placeholder="Ghi chú..."
+                                name="txtNote">
                     </div>
                 </div>
 
@@ -69,7 +74,7 @@
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/tools.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="js/cay-trong.js"></script>
+<script src="../js-function/khach-hang-nhom.js"></script>
 </html>
 
 

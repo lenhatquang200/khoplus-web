@@ -1,31 +1,43 @@
 const listMenu = [
     {name: "Bảng điều khiển", url: "/quan-ly/bang-dieu-khien.html", submenu: []},
     {
+        name: "Hàng hóa", url: "#", submenu: [
+            {name: "Danh sách", url: "/hang-hoa/danh-sach.html"},
+            {name: "Loại", url: "/hang-hoa/loai.html"},
+            {name: "Nhóm", url: "/hang-hoa/nhom.html"},
+            {name: "Đơn vị tính", url: "/hang-hoa/don-vi-tinh.html"},
+        ]
+    },
+    {
+        name: "Nhà cung cấp", url: "#", submenu: [
+            {name: "Danh sách", url: "/nha-cung-cap/danh-sach.html"},
+            {name: "Nhóm", url: "/nha-cung-cap/nhom.html"},
+        ]
+    },
+    {
+        name: "Khách hàng", url: "#", submenu: [
+            {name: "Danh sách", url: "/khach-hang/danh-sach.html"},
+            {name: "Nhóm", url: "/khach-hang/nhom.html"},
+            {name: "Cây trồng", url: "/khach-hang/cay-trong.html", submenu: []},
+        ]
+    },
+    {
         name: "Danh mục",
         url: "#",
         submenu: [
-            {
-                name: "Hàng hóa", url: "#", submenu: [
-                    {name: "Danh sách", url: "/quan-ly/hang-hoa/danh-sach.html"},
-                    {name: "Loại", url: "/quan-ly/hang-hoa/loai.html"},
-                    {name: "Nhóm", url: "/quan-ly/hang-hoa/nhom.html"},
-                    {name: "Đơn vị tính", url: "/quan-ly/hang-hoa/don-vi-tinh.html"},
-                ]
-            },
-            {
-                name: "Nhà cung cấp", url: "#", submenu: [
-                    {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
-                    {name: "Nhóm", url: "/quan-ly/nha-cung-cap/nhom.html"},
-                ]
-            },
-            {name: "Cây trồng", url: "/quan-ly/cay-trong.html", submenu: []},
             {name: "Kho", url: "/quan-ly/kho.html", submenu: []},
-            {
-                name: "Khách hàng", url: "#", submenu: [
-                    // {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
-                    {name: "Nhóm", url: "/quan-ly/khach-hang/nhom.html"},
-                ]
-            },
+
+        ]
+    },
+    {
+        name: "Nhập kho", url: "#", submenu: [
+            {name: "Nhập hàng từ nhà cung cấp", url: "/nhap-kho/nhap-hang-tu-nha-cung-cap.html"},
+        ]
+    },
+    {
+        name: "Xuất kho", url: "#", submenu: [
+            // {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
+            // {name: "Nhóm", url: "/quan-ly/khach-hang/nhom.html"},
         ]
     },
 ]
