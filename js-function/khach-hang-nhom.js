@@ -1,4 +1,5 @@
 $(document).ready(async function () {
+    tools.loader('.container-content', true)
     let response = await tools.ajaxGet("/customer-groups")
     if (response.success) {
         const list = []
@@ -123,5 +124,6 @@ $(document).ready(async function () {
             $('#txtNote').val(obj.note)
         }
     }
+    tools.loader('.container-content', false)
 })
 

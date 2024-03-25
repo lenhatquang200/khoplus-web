@@ -22,24 +22,16 @@ const listMenu = [
         ]
     },
     {
-        name: "Danh mục",
-        url: "#",
-        submenu: [
-            {name: "Kho", url: "/quan-ly/kho.html", submenu: []},
-
-        ]
-    },
-    {
         name: "Nhập kho", url: "#", submenu: [
             {name: "Nhập hàng từ nhà cung cấp", url: "/nhap-kho/nhap-hang-tu-nha-cung-cap.html"},
         ]
     },
-    {
-        name: "Xuất kho", url: "#", submenu: [
-            // {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
-            // {name: "Nhóm", url: "/quan-ly/khach-hang/nhom.html"},
-        ]
-    },
+    // {
+    //     name: "Xuất kho", url: "#", submenu: [
+    //         // {name: "Danh sách", url: "/quan-ly/nha-cung-cap/danh-sach.html"},
+    //         // {name: "Nhóm", url: "/quan-ly/khach-hang/nhom.html"},
+    //     ]
+    // },
 ]
 
 const denyPathname = ['/', '/index.html']
@@ -67,7 +59,7 @@ const txtHomNay = () => {
 
     let userInfo = tools.getUserInfo()
     const txt = `
-    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>${userInfo.current_branche.name}</b>.
+    Xin chào <b>${userInfo.name}</b>, bạn đang ở <b>${userInfo.current_branch.name}</b>.
     Hôm nay là <b>${dayOfWeek}</b>, Ngày <b>${day}</b> Tháng <b>${month}</b> Năm <b>${year}</b>
     `;
     if ($('#txtHomNay').length) {
@@ -185,6 +177,7 @@ const menu = () => {
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a id="btnUserInfo" class="dropdown-item" href="javascript:void(0)">Thông tin</a></li>
                     <li><a data-bs-toggle="modal" data-bs-target="#modalChangeBranches" class="dropdown-item" href="javascript:void(0)">Đổi kho hàng</a></li>
+                    <li><a id="btnCaiDat" class="dropdown-item" href="javascript:void(0)">Cài đặt</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -232,7 +225,7 @@ const menu = () => {
             opts += `
             <div class="form-check">
                 <label class="form-check-label" for="opts_branches_${item.id}">
-                    <input${item.id.toString() === userInfo.current_branche.id.toString() ? " checked" : ""} type="radio" class="form-check-input opts_branches" id="opts_branches_${item.id}" name="optradio" value="${item.id}">${item.name}
+                    <input${item.id.toString() === userInfo.current_branch.id.toString() ? " checked" : ""} type="radio" class="form-check-input opts_branches" id="opts_branches_${item.id}" name="optradio" value="${item.id}">${item.name}
                 </label>
             </div>
             `
@@ -241,7 +234,7 @@ const menu = () => {
         $('#modalChangeBranches .btnSave').off('click').on('click', function () {
             $('#modalChangeBranches .opts_branches').map(function () {
                 if ($(this).prop('checked')) {
-                    localStorage.setItem('current_branche', $(this).attr('value'))
+                    localStorage.setItem('current_branch', $(this).attr('value'))
                     txtHomNay()
                     tools.toast("success", "Đổi kho hàng", "Cập nhật thành công.")
                     $('#modalChangeBranches').modal('hide');
@@ -250,6 +243,11 @@ const menu = () => {
         })
     })
     $('body .container-fluid').css('position', 'relative')
+    $('#btnCaiDat').click(function () {
+        location.href = '/cai-dat.html'
+        localStorage.setItem("MenuClickUrl", '/cai-dat.html')
+        localStorage.setItem("MenuClickName", 'Cài đặt')
+    })
 }
 const breadcrumb = () => {
     const currentPathname = location.pathname
@@ -337,6 +335,11 @@ document.onreadystatechange = function () {
             e.preventDefault();
         });
         $('body').append(`<div id="listToast" style="position: fixed; top: 10px; right: 10px; z-index: 99999999"></div>`)
+        //check isapp
+        const isApp = localStorage.getItem('isApp')
+        if (parseInt(isApp) !== 2) {
+            $('.isApp2').remove()
+        }
     } else {
         document.querySelector("body").style.visibility = "visible";
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

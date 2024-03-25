@@ -1,4 +1,5 @@
 $(document).ready(async function () {
+    tools.loader('.container-content', true)
     let response = await tools.ajaxGet("/product-units")
     if (response.success) {
         const list = []
@@ -116,5 +117,6 @@ $(document).ready(async function () {
                 .val(obj.name)
         }
     }
+    tools.loader('.container-content', false)
 })
 

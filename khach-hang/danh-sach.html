@@ -18,7 +18,7 @@
         </button>
     </div>
     <div class="mb-3 mt-3">
-        <div id="table"></div>
+        <div style="min-height: 200px;" id="table"></div>
     </div>
 </div>
 <!-- The Modal -->
@@ -36,29 +36,43 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="mb-3 mt-3">
-                        <label for="txtName" class="form-label">Kho:</label>
+                        <label for="txtBranch" class="form-label">Kho:</label>
+                        <input type="text" class="form-control" id="txtBranch" placeholder="Kho..."
+                               name="txtBranch">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="txtGroup" class="form-label">Nhóm:</label>
+                        <input autofocus type="text" class="form-control" id="txtGroup" placeholder="Nhóm..."
+                               name="txtGroup">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="txtName" class="form-label">Tên khách:</label>
                         <input
-                                autofocus
-                                oninvalid="this.setCustomValidity('Vui lòng nhập tên kho')"
+                                oninvalid="this.setCustomValidity('Vui lòng nhập tên khách')"
                                 oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtName" placeholder="Tên kho..."
+                                required type="text" class="form-control" id="txtName" placeholder="Tên khách..."
                                 name="txtName">
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="txtPhone" class="form-label">Số điện thoại:</label>
                         <input
-                                oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại kho')"
+                                oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại')"
                                 oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtPhone" placeholder="Số điện thoại kho..."
+                                required type="text" class="form-control" id="txtPhone" placeholder="Số điện thoại..."
                                 name="txtPhone">
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="txtAddress" class="form-label">Địa chỉ:</label>
                         <input
-                                oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ kho')"
+                                oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ')"
                                 oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ kho..."
+                                required type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ..."
                                 name="txtAddress">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="txtNote" class="form-label">Ghi chú:</label>
+                        <input type="text" class="form-control" id="txtNote" placeholder="Ghi chú..."
+                               name="txtNote">
                     </div>
                 </div>
 
@@ -86,7 +100,7 @@
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/tools.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="js/kho.js"></script>
+<script src="../js-function/khach-hang-danh-sach.js"></script>
 </html>
 
 

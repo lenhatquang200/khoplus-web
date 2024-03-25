@@ -11,14 +11,39 @@
 </head>
 <body style="visibility: hidden">
 <div style="" class="container-fluid mt-3 container-content">
-    <div class="mb-3 mt-3">
-        <button id="btnModalForm" type="button" class="btn btn-success" data-bs-toggle="modal"
-                data-bs-target="#modalForm">
-            <i class="bi bi-plus-circle-dotted"></i> Tạo mới
-        </button>
-    </div>
-    <div class="mb-3 mt-3">
-        <div style="min-height: 200px;" id="table"></div>
+    <div class="row">
+        <div class="col-3">
+            <div>
+                <label for="txtSearchProduct" class="form-label">Tìm hàng hóa:</label>
+                <input type="text" class="form-control" id="txtSearchProduct" placeholder="Tìm hàng hóa..."
+                       name="txtSearchProduct">
+            </div>
+            <div id="listSearchProduct">
+                <div class="listSearchProduct-item">
+                    <div style="display: flex;">
+                        <img class="product-img" src="http://khoplus.local/assets/images/user_default.png" alt="">
+                        <span class="title">DAP Hong HA bao 50kg DAP Hong HA bao 50kg DAP Hong HA bao 50kg</span>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="font-weight: bolder;">Tồn kho hiện tại: 90</div>
+                            <div style="font-weight: bolder;">Giá bán: 120,000,000</div>
+                        </div>
+                        <div style="font-style: italic;">Tồn kho hệ thống: 90</div>
+                        <div class="row" style="font-style: italic;">
+                            <div class="col-6">Cuửa hàng 001: 2</div>
+                            <div class="col-6">Cuửa hàng 001: 2</div>
+                            <div class="col-6">Cuửa hàng 001: 2</div>
+                            <div class="col-6">Cuửa hàng 001: 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">2</div>
+        <div class="col-3">
+            <div style="min-height: 200px;" id="table"></div>
+        </div>
     </div>
 </div>
 <!-- The Modal -->
@@ -36,12 +61,12 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="mb-3 mt-3">
-                        <label for="txtName" class="form-label">Nhóm:</label>
+                        <label for="txtName" class="form-label">Cây trồng:</label>
                         <input
                                 autofocus
-                                oninvalid="this.setCustomValidity('Vui lòng nhập tên Nhóm hàng hóa')"
+                                oninvalid="this.setCustomValidity('Vui lòng nhập tên cây trồng')"
                                 oninput="this.setCustomValidity('')"
-                                required type="text" class="form-control" id="txtName" placeholder="Tên nhóm..."
+                                required type="text" class="form-control" id="txtName" placeholder="Tên cây trồng..."
                                 name="txtName">
                     </div>
                 </div>
@@ -69,7 +94,7 @@
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/tools.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="../js-function/hang-hoa-don-vi-tinh.js"></script>
+<script src="../js-function/nhap-hang-tu-nhap-cung-cap.js"></script>
 </html>
 
 

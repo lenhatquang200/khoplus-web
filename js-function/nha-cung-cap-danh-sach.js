@@ -1,4 +1,5 @@
 $(document).ready(async function () {
+    tools.loader('.container-content', true)
     let listManufacturing = await tools.ajaxGet("/manufacturings")
     let listManufacturingGroup = await tools.ajaxGet("/manufacturing-groups")
     if (listManufacturing.success) {
@@ -196,5 +197,6 @@ $(document).ready(async function () {
     }
 
     IMask($('#txtPhone')[0], {mask: "0000-000-000"});
+    tools.loader('.container-content', false)
 })
 

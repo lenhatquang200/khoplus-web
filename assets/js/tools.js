@@ -21,23 +21,23 @@ const tools = {
         if (!_.isNull(user) || _.isUndefined(user)) {
             user = JSON.parse(user)
         }
-        let current_branche = localStorage.getItem('current_branche')
-        if (!_.isNull(current_branche) || _.isUndefined(current_branche)) {
-            let data = user.branches.filter(item => item.id.toString() === current_branche.toString())
+        let current_branch = localStorage.getItem('current_branch')
+        if (!_.isNull(current_branch) || _.isUndefined(current_branch)) {
+            let data = user.branches.filter(item => item.id.toString() === current_branch.toString())
             if (data.length) {
                 data = data[0]
-                user.current_branche = {
+                user.current_branch = {
                     id: data.id,
                     name: data.name
                 }
             } else {
-                user.current_branche = {
+                user.current_branch = {
                     id: -1,
                     name: "Kho không xác định"
                 }
             }
         } else {
-            user.current_branche = {
+            user.current_branch = {
                 id: -1,
                 name: "Kho không xác định"
             }
@@ -50,7 +50,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
-            'current-branche': localStorage.getItem('current_branche')
+            'current-branch': localStorage.getItem('current_branch')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -70,7 +70,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
-            'current-branche': localStorage.getItem('current_branche')
+            'current-branch': localStorage.getItem('current_branch')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -91,7 +91,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
-            'current-branche': localStorage.getItem('current_branche')
+            'current-branch': localStorage.getItem('current_branch')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -111,7 +111,7 @@ const tools = {
             (_.isUndefined(options.token) ? true : options.token)
         const headers = {
             'Authorization': isToken ? tools.getAccessToken() : '',
-            'current-branche': localStorage.getItem('current_branche')
+            'current-branch': localStorage.getItem('current_branch')
         }
         return await $.ajax({
             url: `${config['apiUrl']}${url}`,
@@ -219,17 +219,15 @@ const tools = {
             }
         })
     },
-    loader: function (isRun) {
+    loader: function (element, isRun) {
         if (isRun) {
-            $('body .container-content').append(`
-            <div id="divLoading" style="overflow: hidden; background-color: #fff; position: absolute; top: 0; width: 100%; height: 2000px; right: 0; left: 0;">
-                <div id="loader"></div>
+            $(element).css('position', 'relative').append(`
+            <div id="loader">
+                <div class="loading"></div>
             </div>
             `)
-            $('body').css('overflow', 'hidden')
         } else {
-            $('body').css('overflow', 'auto')
-            $('#divLoading').remove()
+            $('#loader').remove()
         }
     },
 

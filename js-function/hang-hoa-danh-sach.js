@@ -1,4 +1,5 @@
 $(document).ready(async function () {
+    tools.loader('.container-content', true)
     let listProduct = await tools.ajaxGet("/products")
     if (listProduct.success) {
         const list = []
@@ -208,5 +209,6 @@ $(document).ready(async function () {
             $('#txtGroup').attr('data-id', obj.group.id).val(obj.group.name)
         }
     }
+    tools.loader('.container-content', false)
 })
 

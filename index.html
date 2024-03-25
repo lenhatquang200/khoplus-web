@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/logo.ico">
     <link href="assets/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body style="visibility: hidden">
 <div class="container-fluid mt-5">
@@ -14,18 +15,21 @@
         <div class="col"></div>
         <div class="col">
             <div class="text-center">
-                <img src="assets/images/logo.png" alt="logo" style="width: 150px;">
+                <img id="btnSetupApiLink" data-bs-toggle="modal"
+                     data-bs-target="#modalSetupApiLink" src="assets/images/logo.png" alt="logo" style="width: 150px;">
                 <h2 class="mt-3"><b>XÁC THỰC TÀI KHOẢN</b></h2>
             </div>
             <form id="form">
                 <div class="mb-3 mt-3">
                     <label for="sodienthoai"><b>Số điện thoại:</b></label>
-                    <input value="0909000111" rememberValue="1" type="text" class="form-control sodienthoai" id="sodienthoai"
+                    <input value="0909000111" rememberValue="1" type="text" class="form-control sodienthoai"
+                           id="sodienthoai"
                            placeholder="Nhập số điện thoại...">
                 </div>
                 <div class="mb-3">
                     <label for="matkhau"><b>Mật khẩu:</b></label>
-                    <input value="admin" type="password" class="form-control matkhau" id="matkhau" placeholder="Nhập mật khẩu...">
+                    <input value="admin" type="password" class="form-control matkhau" id="matkhau"
+                           placeholder="Nhập mật khẩu...">
                 </div>
                 <div class="clearfix">
                     <button type="submit" class="btn btn-success">Tiếp tục</button>
@@ -40,6 +44,43 @@
         <div class="col"></div>
     </div>
 </div>
+<form id="modalFormSubmitApiLink">
+    <div class="modal fade" id="modalSetupApiLink" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Server</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="txtApiLink" class="form-label">Link Server:</label>
+                        <input
+                                autofocus
+                                oninvalid="this.setCustomValidity('Vui lòng nhập link server')"
+                                oninput="this.setCustomValidity('')"
+                                required type="text" class="form-control" id="txtApiLink" placeholder="Link server..."
+                                name="txtApiLink">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btnClose" data-bs-dismiss="modal"><i
+                            class="bi bi-x-lg"></i> Đóng
+                    </button>
+                    <button type="submit" class="btn btn-success btnSave">
+                        <i class="bi bi-floppy"></i> Lưu</button>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <script src="assets/bootstrap5/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <script src="assets/js/lodash.js"></script>
