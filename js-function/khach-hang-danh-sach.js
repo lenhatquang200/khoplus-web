@@ -186,7 +186,6 @@ $(document).ready(async function () {
             $('#txtPhone').val(obj.phone)
             $('#txtAddress').val(obj.address)
             $('#txtNote').val(obj.note)
-            console.log(obj)
             $('#txtBranch').attr('data-id', obj.branch.id).val(obj.branch.name)
             $('#txtGroup').attr('data-id', obj.group.id).val(obj.group.name)
         }
