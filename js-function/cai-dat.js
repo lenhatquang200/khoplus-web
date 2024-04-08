@@ -13,7 +13,7 @@ $(document).ready(async function () {
     })
     if (parseInt(isApp) === 2) {
         // is branches
-        tools.loader('.container-content', true)
+        tools.loader('.container-content', true, "Đang lấy dữ liệu...")
         let response = await tools.ajaxGet("/branches")
         if (response.success) {
             const list = []
@@ -30,6 +30,7 @@ $(document).ready(async function () {
             })
             let table = tools.table.init({
                 id: '#table',
+                maxHeight: 500,
                 columns: [
                     {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
                     {name: "name", value: "Kho"},

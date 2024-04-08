@@ -1,8 +1,14 @@
 $(document).ready(async function () {
-    tools.loader('.container-content', true)
-    let response = await tools.ajaxGet("/customers")
-    let listBranch = await tools.ajaxGet("/branches")
-    let listCustomerGroup = await tools.ajaxGet("/customer-groups")
+    tools.loader('.container-content', true, "Đang lấy dữ liệu...")
+    const [
+        listCustomer,
+        listBranch,
+        listCustomerGroup
+    ] = await Promise.all([
+        tools.ajaxGet("/customers"),
+        tools.ajaxGet("/branches"),
+        tools.ajaxGet("/customer-groups")
+    ])
     $('#txtBranch').on('input', function () {
         let _listBranch = listBranch.data
         tools.select('#txtBranch', $(this).val(), _listBranch, id => {
@@ -23,12 +29,22 @@ $(document).ready(async function () {
             }
         })
     })
-    if (response.success) {
+    if (listCustomer.success) {
         const list = []
         let num = 1
-        response.data.map(item => {
-            item.customer_branch.text = item.customer_branch.name
-            item.customer_group.text = item.customer_group.name
+        listCustomer.data.map(item => {
+            if (_.isNull(item.customer_branch)) {
+                item.customer_branch = {}
+                item.customer_branch.text = ""
+            } else {
+                item.customer_branch.text = item.customer_branch.name
+            }
+            if (_.isNull(item.customer_group)) {
+                item.customer_group = {}
+                item.customer_group.text = ""
+            } else {
+                item.customer_group.text = item.customer_group.name
+            }
             list.push({
                 num: num++,
                 id: item.id,
@@ -43,6 +59,7 @@ $(document).ready(async function () {
         })
         let table = tools.table.init({
             id: '#table',
+            maxHeight: 500,
             columns: [
                 {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
                 {name: "branch", value: "Kho"},
@@ -129,6 +146,7 @@ $(document).ready(async function () {
                 //update row
                 const trId = $("#txtName").attr('data-trid')
                 const id = $("#txtName").attr('data-id')
+                const num = $("#txtName").attr('data-num')
                 const response = await tools.ajaxPut("/customers/" + id, {
                     name: name,
                     phone: phone,
@@ -140,7 +158,7 @@ $(document).ready(async function () {
                 if (response.success) {
                     response.data.customer_branch.text = response.data.customer_branch.name
                     response.data.customer_group.text = response.data.customer_group.name
-                    table.updateRow({id: id, trId: trId}, {
+                    table.updateRow({id: id, trId: trId, num: num}, {
                         name: name,
                         phone: phone,
                         address: address,
@@ -182,6 +200,7 @@ $(document).ready(async function () {
             $('#txtName')
                 .attr('data-trid', data.trId)
                 .attr('data-id', obj.id)
+                .attr('data-num', obj.num)
                 .val(obj.name)
             $('#txtPhone').val(obj.phone)
             $('#txtAddress').val(obj.address)

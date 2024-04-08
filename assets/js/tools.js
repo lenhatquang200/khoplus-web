@@ -219,13 +219,26 @@ const tools = {
             }
         })
     },
-    loader: function (element, isRun) {
+    loader: function (element, isRun, text) {
         if (isRun) {
             $(element).css('position', 'relative').append(`
             <div id="loader">
-                <div class="loading"></div>
+                <div class="background">
+                    <div class="loader">
+                        <div class="circle white"></div>
+                        <div class="circle red"></div>
+                        <div class="circle orange"></div>
+                        <div class="circle yellow"></div>
+                        <div class="text">${_.isUndefined(text) ? "" : text}</div>
+                    </div>
+                </div>
             </div>
             `)
+            // $(element).css('position', 'relative').append(`
+            // <div id="loader">
+            //     <div class="loading"></div>
+            // </div>
+            // `)
         } else {
             $('#loader').remove()
         }
@@ -359,7 +372,7 @@ const tools = {
                     tools.table.__updateText(_in)
                 },
                 deleteRow: (data) => {
-                    _in.rootData = _in.rootData.filter(item => item.id.toString() !== data.id.toString())
+                    _in.rootData = _in.rootData.filter(item => item.num.toString() !== data.num.toString())
                     let num = 1
                     _in.rootData = _in.rootData.map(item => {
                         item.num = num++
@@ -372,7 +385,7 @@ const tools = {
                 },
                 updateRow: (data, obj) => {
                     _in.rootData = _in.rootData.filter(item => {
-                        if (item.id.toString() === data.id.toString()) {
+                        if (item.num.toString() === data.num.toString()) {
                             Object.keys(item).map(k => {
                                 if (!_.isUndefined(obj[k])) {
                                     item[k] = obj[k]
@@ -389,6 +402,9 @@ const tools = {
                     _in.data = _in.rootData
                     tools.table._renderTbody(_in)
                     tools.table.__updateText(_in)
+                },
+                getData: () => {
+                    return _in.rootData
                 }
             }
         },
@@ -515,6 +531,13 @@ const tools = {
                             if (indexCols[key]['format'] === 'datetime') {
                                 v = tools.timeSpanToDateTime(v)
                             }
+                            if (indexCols[key]['format'] === 'checkOk') {
+                                if (parseInt(v)) {
+                                    v = '<i class="bi bi-check-lg"></i>'
+                                } else {
+                                    v = ''
+                                }
+                            }
                         }
                         tds += `<td${style} data-name="${key}">${_.isNull(v) ? "" : v}</td>`
                     }
@@ -524,18 +547,18 @@ const tools = {
                     let haveActions = 0
                     if (_in.actions.delete) {
                         haveActions++
-                        btns = `<a data-type="delete" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa""><i class="bi bi-trash3 text-danger"></i></a>`
+                        btns = `<a data-type="delete" data-num="${obj.num}" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa""><i class="bi bi-trash3 text-danger"></i></a>`
                     }
                     if (_in.actions.edit) {
                         haveActions++
-                        btns += `<span style="margin-left: 10px"></span><a data-type="edit" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Chỉnh sửa"><i class="bi bi-pencil-square text-info"></i></a>`
+                        btns += `<span style="margin-left: 10px"></span><a data-type="edit" data-num="${obj.num}" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Chỉnh sửa"><i class="bi bi-pencil-square text-info"></i></a>`
                     }
                     if (_in.actions.detail) {
                         haveActions++
-                        btns += `<span style="margin-left: 10px"></span><a data-type="detail" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết"><i class="bi bi-info-circle text-dark"></i></a>`
+                        btns += `<span style="margin-left: 10px"></span><a data-type="detail" data-num="${obj.num}" data-id="${obj.id}" class="tableRowActions" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết"><i class="bi bi-info-circle text-dark"></i></a>`
                     }
                     if (haveActions > 0) {
-                        tds = tds + `<td style="text-align: center;">${btns}</td>`
+                        tds = tds + `<td style="text-align: center; width: 100px;">${btns}</td>`
                     }
                 }
                 return tds
@@ -548,15 +571,24 @@ const tools = {
                     trs += `<tr id="${ramdomIDStr}_${row.id}">${_renderTD(row)}</tr>`
                 }
             }
+            if (trs === '') {
+                let haveActions = 0
+                if (_in.actions.delete || _in.actions.edit || _in.actions.detail) {
+                    haveActions = 1
+                }
+                trs += `<tr><td colspan="${_in.columns.length + haveActions}">Không có dữ liệu.</td></tr>`
+            }
             $(_in.id).find('tbody').html(trs)
             $(_in.id).find('.tableRowActions').off('click').on('click', function (e) {
                 const id = $(this).attr('data-id')
+                const num = $(this).attr('data-num')
                 const trtId = $(this).parent().parent().attr('id')
                 const type = $(this).attr('data-type')
                 if (_in['handleActions'])
                     if (_in['handleActions'][type])
                         _in['handleActions'][type]({
                             id: id,
+                            num: num,
                             trId: trtId
                         }, _in)
             })
@@ -572,12 +604,14 @@ const tools = {
             }
             let thead = ``
             _in.columns.map(item => {
-                let styles = []
+                let style = tools.table.__makeStyle(item.style)
                 if (item.align) {
-                    styles.push(`text-align: ${item.align}`)
+                    let _style = style.split('text-align:')
+                    let __style = _style[1].split(';')
+                    __style.shift()
+                    style = [_style[0], ['text-align: ' + item.align, __style.join(';')].join(';')].join('')
                 }
-                const strStyle = styles.length ? ` style="${styles.join(';')}"` : ''
-                thead += `<th${strStyle}>${item['value']}</th>`
+                thead += `<th${style}>${item['value']}</th>`
             })
             if (haveActions > 0) {
                 thead += `<th style="width: 100px;"></th>`
@@ -601,6 +635,21 @@ const tools = {
                     <tbody></tbody>
                 </table>
                 <style>
+                    table tbody {
+                        display: block;
+                        height: ${_.isUndefined(_in.maxHeight) ? 500 : _in.maxHeight}px;
+                        overflow-y: scroll;
+                    }
+                    
+                    table thead, table tbody tr {
+                        display: table;
+                        width: 100%;
+                        table-layout: fixed;
+                    }
+                    table {
+                        border-bottom: 1px solid;
+                    }
+                    
                     .page-link{
                         color: #000;
                     }

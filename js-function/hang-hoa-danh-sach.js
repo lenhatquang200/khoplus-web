@@ -1,6 +1,16 @@
 $(document).ready(async function () {
-    tools.loader('.container-content', true)
-    let listProduct = await tools.ajaxGet("/products")
+    tools.loader('.container-content', true, "Đang lấy dữ liệu...")
+    const [
+        listProduct,
+        listType,
+        listGroup,
+        listUnit
+    ] = await Promise.all([
+        tools.ajaxGet("/products"),
+        tools.ajaxGet("/product-types"),
+        tools.ajaxGet("/product-groups"),
+        tools.ajaxGet("/product-units")
+    ])
     if (listProduct.success) {
         const list = []
         let num = 1
@@ -21,6 +31,7 @@ $(document).ready(async function () {
         })
         let table = tools.table.init({
             id: '#table',
+            maxHeight: 500,
             columns: [
                 {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
                 {name: "code", value: "Mã"},
@@ -42,10 +53,6 @@ $(document).ready(async function () {
                 edit: editRow,
             },
         })
-
-        let listType = await tools.ajaxGet("/product-types")
-        let listGroup = await tools.ajaxGet("/product-groups")
-        let listUnit = await tools.ajaxGet("/product-units")
         $('#txtType').on('input', function () {
             let _listType = listType.data
             tools.select('#txtType', $(this).val(), _listType, id => {
@@ -148,6 +155,7 @@ $(document).ready(async function () {
                 //update row
                 const trId = $("#txtName").attr('data-trid')
                 const id = $("#txtName").attr('data-id')
+                const num = $("#txtName").attr('data-num')
                 const response = await tools.ajaxPut("/products/" + id, {
                     name: name,
                     type_id: type_id,
@@ -159,7 +167,7 @@ $(document).ready(async function () {
                     response.data.unit.text = response.data.unit.name
                     response.data.type.text = response.data.type.name
                     response.data.group.text = response.data.group.name
-                    table.updateRow({id: id, trId: trId}, {
+                    table.updateRow({id: id, trId: trId, num: num}, {
                         name: name,
                         unit: response.data.unit,
                         unit_id: unit_id,
@@ -202,6 +210,7 @@ $(document).ready(async function () {
             $('#txtName')
                 .attr('data-trid', data.trId)
                 .attr('data-id', obj.id)
+                .attr('data-num', obj.num)
                 .val(obj.name)
             $('#txtCode').val(obj.code)
             $('#txtUnit').attr('data-id', obj.unit.id).val(obj.unit.name)

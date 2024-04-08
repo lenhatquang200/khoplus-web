@@ -1,5 +1,5 @@
 $(document).ready(async function () {
-    tools.loader('.container-content', true)
+    tools.loader('.container-content', true, "Đang lấy dữ liệu...")
     let listManufacturing = await tools.ajaxGet("/manufacturings")
     let listManufacturingGroup = await tools.ajaxGet("/manufacturing-groups")
     if (listManufacturing.success) {
@@ -40,6 +40,7 @@ $(document).ready(async function () {
         })
         let table = tools.table.init({
             id: '#table',
+            maxHeight: 500,
             columns: [
                 {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
                 {name: "code", value: "Mã"},
@@ -136,6 +137,7 @@ $(document).ready(async function () {
                     //update row
                     const trId = $("#txtName").attr('data-trid')
                     const id = $("#txtName").attr('data-id')
+                    const num = $("#txtName").attr('data-num')
                     const data = {
                         code: code,
                         name: name,
@@ -150,7 +152,7 @@ $(document).ready(async function () {
                     if (response.success) {
                         response.data.manufacturing_group.text = response.data.manufacturing_group.name
                         data.manufacturing_group = response.data.manufacturing_group
-                        table.updateRow({id: id, trId: trId}, data)
+                        table.updateRow({id: id, trId: trId, num: num}, data)
                         tools.toast("success", "Nhóm nhà cung cấp", "Cập nhật thành công.")
                     } else {
                         tools.toast("error", "Nhóm nhà cung cấp", "Lỗi, vui lòng kiểm tra lại.")
@@ -185,6 +187,7 @@ $(document).ready(async function () {
             $('#txtName')
                 .attr('data-trid', data.trId)
                 .attr('data-id', obj.id)
+                .attr('data-num', obj.num)
                 .val(obj.name)
             $('#txtCode').val(obj.code)
             $('#txtPhone').val(obj.phone)

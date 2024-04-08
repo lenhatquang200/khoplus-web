@@ -22,6 +22,11 @@ const listMenu = [
         ]
     },
     {
+        name: "Xuất kho", url: "#", submenu: [
+            {name: "Khách mua hàng", url: "/khach-hang/mua-hang.html"},
+        ]
+    },
+    {
         name: "Nhập kho", url: "#", submenu: [
             {name: "Nhập hàng từ nhà cung cấp", url: "/nhap-kho/nhap-hang-tu-nha-cung-cap.html"},
         ]

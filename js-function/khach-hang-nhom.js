@@ -1,5 +1,5 @@
 $(document).ready(async function () {
-    tools.loader('.container-content', true)
+    tools.loader('.container-content', true, "Đang lấy dữ liệu...")
     let response = await tools.ajaxGet("/customer-groups")
     if (response.success) {
         const list = []
@@ -15,6 +15,7 @@ $(document).ready(async function () {
         })
         let table = tools.table.init({
             id: '#table',
+            maxHeight: 500,
             columns: [
                 {name: "num", value: "Số", align: 'center', style: {'text-align': 'center', width: '80px'}},
                 {name: "name", value: "Nhóm"},
@@ -81,12 +82,13 @@ $(document).ready(async function () {
                 //update row
                 const trId = $("#txtName").attr('data-trid')
                 const id = $("#txtName").attr('data-id')
+                const num = $("#txtName").attr('data-num')
                 const response = await tools.ajaxPut("/customer-groups/" + id, {
                     name: name,
                     note: note
                 })
                 if (response.success) {
-                    table.updateRow({id: id, trId: trId}, {name: name, note: note})
+                    table.updateRow({id: id, trId: trId, num: num}, {name: name, note: note})
                     tools.toast("success", "Nhóm khách hàng", "Cập nhật thành công.")
                 } else {
                     tools.toast("error", "Nhóm khách hàng", "Lỗi, vui lòng kiểm tra lại.")
@@ -120,6 +122,7 @@ $(document).ready(async function () {
             $('#txtName')
                 .attr('data-trid', data.trId)
                 .attr('data-id', obj.id)
+                .attr('data-num', obj.num)
                 .val(obj.name)
             $('#txtNote').val(obj.note)
         }
